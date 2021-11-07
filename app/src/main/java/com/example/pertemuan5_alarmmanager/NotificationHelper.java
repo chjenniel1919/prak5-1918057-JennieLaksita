@@ -1,5 +1,6 @@
 package com.example.pertemuan5_alarmmanager;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,6 +17,7 @@ public class NotificationHelper extends ContextWrapper {
     private NotificationManager mManager;
 
     //membuat dan membangun channel notifikasi
+    @SuppressLint("ObsoleteSdkInt")
     public NotificationHelper(Context base) {
     super(base);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -28,7 +30,7 @@ public class NotificationHelper extends ContextWrapper {
     private void createChannel() {
         NotificationChannel channel = new NotificationChannel(
                 channelID, channelName,
-        //tingkat importance = high ( penting sekali )
+        //tingkatimportance = high ( penting sekali )
         NotificationManager.IMPORTANCE_HIGH
         );
 
@@ -38,17 +40,19 @@ public class NotificationHelper extends ContextWrapper {
     //membuka izin pengaturan dari aplikasi untuk memulai service notifikasi
     public NotificationManager getManager() {
         if (mManager == null) {
-        mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mManager = (NotificationManager)
+                getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
         return mManager;
     }
 
     //builder yang akan membuat notifikasi tampil
-    public NotificationCompat.Builder getChannelNotification() { return new
+    public NotificationCompat.Builder getChannelNotification() {
+        return new
             NotificationCompat.Builder(getApplicationContext(), channelID)
-            .setContentTitle("Alarm!")
-            .setContentText("Bangun Woi ")
+            .setContentTitle("Get Work!")
+            .setContentText("It's about late.. ")
             .setSmallIcon(R.drawable.ic_android);
     }
 }
